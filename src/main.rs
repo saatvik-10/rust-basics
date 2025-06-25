@@ -32,6 +32,8 @@ fn main() {
     let first_word = get_first_word(sentence);
 
     println!("First word: {}", first_word);
+
+    update_str();
 }
 
 fn is_even(x: i32) -> bool {
@@ -47,4 +49,23 @@ fn get_first_word(sentence: String) -> String {
         }
     } 
     return ans;
+}
+
+fn update_str() {
+    let mut s = String::from("hello");
+    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+
+    s.push_str("world");
+    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+
+    s.push_str("this");
+    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+
+    s.push_str("is");
+    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+
+    for _ in 0..100 {
+        s.push_str("rust");
+        println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+    }
 }
