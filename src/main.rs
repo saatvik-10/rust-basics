@@ -1,6 +1,6 @@
 use std::fs;
 use rand::{Rng, rng};
-enum Result<T, E> {
+enum _Result<T, E> {
     Ok(T),
     Err(E),
 }
@@ -82,6 +82,17 @@ fn main() {
     let mut t_rng = rng();
     let n:u32 = t_rng.random();
     println!("Random Number is: {}", n);
+
+    /* ADVANCE CONCEPTS */
+
+    let mut vec = Vec::new();
+    vec.push(1);
+    vec.push(2);
+    vec.push(3);
+    println!("{:?}", even_filter(&vec));
+    println!("{:?}", vec)
+
+    let mut _vec2 = vec![1, 2, 3, 4, 5];// Create a vector with initial values
 }
 
 fn is_even(x: i32) -> bool {
@@ -130,4 +141,14 @@ fn borrow(s: &String) {
 
 fn updated_str(s:&mut String) {
     s.push_str("World");
+}
+
+fn even_filter(vec : &Vec<i32>) -> Vec<i32> {
+    let mut new_vec = Vec::new();
+    for i in vec {
+        if i % 2 == 0 {
+            new_vec.push(*i);
+        }
+    }
+    return new_vec;
 }
