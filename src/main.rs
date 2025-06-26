@@ -1,5 +1,7 @@
 use std::fs;
 use rand::{Rng, rng};
+use std::collections::HashMap;
+
 enum _Result<T, E> {
     Ok(T),
     Err(E),
@@ -90,9 +92,23 @@ fn main() {
     vec.push(2);
     vec.push(3);
     println!("{:?}", even_filter(&vec));
-    println!("{:?}", vec)
+    println!("{:?}", vec);
 
     let mut _vec2 = vec![1, 2, 3, 4, 5];// Create a vector with initial values
+
+    let mut users = HashMap::new();
+    users.insert(String::from("Alice"), 30);
+    users.insert(String::from("Bob"), 25);
+
+    let ans = users.get("Alice");
+
+    // println!("Alice's age: {:?}", ans); //giving an Option<type>, hv to use matcher
+    match ans {
+        Some(age) => println!("Alice's age: {}", age),
+        None => println!("Alice not found"),
+    }
+
+    //use for(key, val) loop to iterate over HashMap
 }
 
 fn is_even(x: i32) -> bool {
