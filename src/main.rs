@@ -1,4 +1,5 @@
 use std::fs;
+use rand::{Rng, rng};
 enum Result<T, E> {
     Ok(T),
     Err(E),
@@ -77,6 +78,10 @@ fn main() {
     }
 
     //if in a different function we return unwrap(), it will panic if the result is an Err and the program will crash
+
+    let mut t_rng = rng();
+    let n:u32 = t_rng.random();
+    println!("Random Number is: {}", n);
 }
 
 fn is_even(x: i32) -> bool {
