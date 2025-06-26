@@ -42,6 +42,16 @@ fn main() {
     let mut my_string = String::from("hello");
     my_string = takes_ownership(my_string);
     println!("{}", my_string);
+
+    let s1 = String::from("hello");
+    borrow(&s1);
+    println!("{}", s1);
+
+    let mut s2 = String::from("hello");
+    updated_str(&mut s2);
+    print!("{}", s2);
+
+    //IF YOU HAVE A SINGLE MUTABLE REFERENCE, YOU CANNOT HAVE ANY OTHER REFERENCES (MUTABLE OR IMMUTABLE) TO THE SAME VARIABLE  TO AVOID DATA INCONSISTENCY
 }
 
 fn is_even(x: i32) -> bool {
@@ -82,4 +92,12 @@ fn update_str() {
 fn takes_ownership(s: String) -> String {
     println!("Taking ownership of: {}", s);
     return s;
+}
+
+fn borrow(s: &String) {
+    println!("Taking ownership of: {}", s);
+}
+
+fn updated_str(s:&mut String) {
+    s.push_str("World");
 }
