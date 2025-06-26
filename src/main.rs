@@ -1,3 +1,8 @@
+struct User {
+    name: String,
+    age: u32,
+    active: bool,
+}
 fn main() {
     let x: i32 = 5;
     let y: u32 = 5;
@@ -52,6 +57,13 @@ fn main() {
     print!("{}", s2);
 
     //IF YOU HAVE A SINGLE MUTABLE REFERENCE, YOU CANNOT HAVE ANY OTHER REFERENCES (MUTABLE OR IMMUTABLE) TO THE SAME VARIABLE  TO AVOID DATA INCONSISTENCY
+
+    let user = User {
+        name: String::from("Alice"),
+        age: 30,
+        active: true,
+    };
+    println!("User: {}, Age: {}, Active: {}", user.name, user.age, user.active);
 }
 
 fn is_even(x: i32) -> bool {
