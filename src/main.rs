@@ -34,6 +34,14 @@ fn main() {
     println!("First word: {}", first_word);
 
     update_str();
+
+    let s1 = String::from("hello");
+    let _s2 = s1.clone();
+    println!("{}", s1);
+
+    let mut my_string = String::from("hello");
+    my_string = takes_ownership(my_string);
+    println!("{}", my_string);
 }
 
 fn is_even(x: i32) -> bool {
@@ -64,8 +72,14 @@ fn update_str() {
     s.push_str("is");
     println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
 
-    for _ in 0..100 {
+    for _ in 0..10 {
         s.push_str("rust");
         println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
     }
+
+}
+
+fn takes_ownership(s: String) -> String {
+    println!("Taking ownership of: {}", s);
+    return s;
 }
