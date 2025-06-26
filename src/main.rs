@@ -1,3 +1,8 @@
+use std::fs;
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
 struct User {
     name: String,
     age: u32,
@@ -64,6 +69,14 @@ fn main() {
         active: true,
     };
     println!("User: {}, Age: {}, Active: {}", user.name, user.age, user.active);
+
+    let res = fs::read_to_string("example.txt");
+    match res {
+        Ok(content) => println!("File content: {}", content),
+        Err(e) => println!("Error reading file: {}", e),
+    }
+
+    //if in a different function we return unwrap(), it will panic if the result is an Err and the program will crash
 }
 
 fn is_even(x: i32) -> bool {
