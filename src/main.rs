@@ -130,6 +130,40 @@ fn main() {
     }
     //.iter and .iter_mut borrow the vector, while .into_iter takes ownership of the vector
     // using for loop on a vector will automatically call .into_iter() on it
+
+    let v2 = vec![1, 2, 3];
+
+    let v2_iter = v2.iter();
+    //consuming adapter
+    let sum:i32 = v2_iter.sum(); //won't be able to use v2_iter again
+    println!("Sum of v2: {}", sum);
+
+    let v2_iter = v2.iter();
+    let v3_iter = v2.iter();
+    //iterator adapters
+    let v2_iter2 = v2_iter.map(|x| x * 2);
+
+    for i in v2_iter2 {
+        println!("v2_iter2 using map: {:?}", i);
+    }
+
+    let v3_iter3 = v3_iter.filter(|x| *x % 2 == 0);
+
+    for i in v3_iter3 {
+        println!("v3_iter3 using filter: {:?}", i);
+    }
+
+    let assign_vec = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    let ans1 = assign_vec.iter().filter(|x| *x % 2 == 0).map(|x| x * 2);
+    let ans2 = assign_vec.iter().filter(|x| *x % 2 == 0).map(|x| x * 2);
+
+    for i in ans1 {
+        println!("Assignment ans is: {:?}", i)
+    }
+
+    let new_ans: Vec<i32> = ans2.collect(); //using collections
+    println!("New ans is: {:?}", new_ans);
 }
 
 fn is_even(x: i32) -> bool {
