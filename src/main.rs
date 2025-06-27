@@ -107,8 +107,29 @@ fn main() {
         Some(age) => println!("Alice's age: {}", age),
         None => println!("Alice not found"),
     }
-
     //use for(key, val) loop to iterate over HashMap
+
+    let mut v1 = vec![1, 2, 3];
+    
+    let v1_iter = v1.iter_mut();
+
+    for val in v1_iter {
+        *val += 50;
+    }
+    println!("Updated vector: {:?}", v1);
+
+    let v1_iter = v1.iter();
+
+    for val in v1_iter {
+        println!("Value: {}", val);
+    }
+    let v1 = v1.into_iter();
+
+    for val in v1 {
+        println!("Value: {}", val);
+    }
+    //.iter and .iter_mut borrow the vector, while .into_iter takes ownership of the vector
+    // using for loop on a vector will automatically call .into_iter() on it
 }
 
 fn is_even(x: i32) -> bool {
