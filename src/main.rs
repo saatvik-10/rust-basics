@@ -164,6 +164,22 @@ fn main() {
 
     let new_ans: Vec<i32> = ans2.collect(); //using collections
     println!("New ans is: {:?}", new_ans);
+
+    let word = String::from("hello world");
+    let sliced_word = &word[0..5]; //taking reference / borrowing a part of the string
+
+    //if we do word.clear(), this is the situation called dangling pointer and this is where rust comes in handy.
+
+    println!("Sliced word: {}", sliced_word);
+
+    let word = String::from("hello world");
+    let word_res = find_first_word(&word);
+    
+    println!("First word: {}", word_res);
+
+    let arr = [1, 2, 3, 4, 5];
+    let slice = &arr[1..4]; //taking a slice of the array
+    println!("Slice: {:?}", slice);
 }
 
 fn is_even(x: i32) -> bool {
@@ -222,4 +238,16 @@ fn even_filter(vec : &Vec<i32>) -> Vec<i32> {
         }
     }
     return new_vec;
+}
+
+fn find_first_word(word: &String) -> &str {
+    let mut index = 0;
+
+    for (_, i) in word.chars().enumerate() {
+        if i == ' ' {
+            break;
+        }
+        index = index + 1;
+    }
+    return &word[0..index];
 }
