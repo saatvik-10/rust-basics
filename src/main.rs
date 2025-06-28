@@ -11,6 +11,13 @@ struct User {
     age: u32,
     active: bool,
 }
+
+trait Summary {
+    fn summarize(&self) -> String {
+        return String::from("No summary available"); //default implementation in case required
+    }
+}
+
 fn main() {
     let x: i32 = 5;
     let y: u32 = 5;
@@ -180,6 +187,13 @@ fn main() {
     let arr = [1, 2, 3, 4, 5];
     let slice = &arr[1..4]; //taking a slice of the array
     println!("Slice: {:?}", slice);
+
+    let user = User {
+        name: String::from("Alice"),
+        age: 30,
+        active: true,
+    };
+    println!("User Summary: {}", user.summarize());
 }
 
 fn is_even(x: i32) -> bool {
@@ -250,4 +264,10 @@ fn find_first_word(word: &String) -> &str {
         index = index + 1;
     }
     return &word[0..index];
+}
+
+impl Summary for User { //traits are like interface in typescript
+    fn summarize(&self) -> String {
+        return format!("User: {}, Age: {}, Active: {}", self.name, self.age, self.active);
+    }
 }
