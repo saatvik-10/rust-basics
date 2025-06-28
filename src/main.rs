@@ -18,6 +18,12 @@ trait Summary {
     }
 }
 
+trait Fix {
+    fn fix(&self) -> String {
+        return String::from("No fix available"); //default implementation in case required
+    }
+}
+
 fn main() {
     let x: i32 = 5;
     let y: u32 = 5;
@@ -193,7 +199,8 @@ fn main() {
         age: 30,
         active: true,
     };
-    println!("User Summary: {}", user.summarize());
+    notify(user);
+    // println!("User Summary: {}", user.summarize());
 }
 
 fn is_even(x: i32) -> bool {
@@ -270,4 +277,10 @@ impl Summary for User { //traits are like interface in typescript
     fn summarize(&self) -> String {
         return format!("User: {}, Age: {}, Active: {}", self.name, self.age, self.active);
     }
+}
+
+impl Fix for User {}
+
+fn notify<T: Summary + Fix>(item: T) {
+    println!("Notification: {}", item.summarize());
 }
