@@ -201,6 +201,15 @@ fn main() {
     };
     notify(user);
     // println!("User Summary: {}", user.summarize());
+
+    let ans;
+
+    let str1 = String::from("hello"); {
+        let str2 = String::from("world");
+        ans = longest(&str1, &str2);
+    }
+    
+    println!("Longest string: {}", ans);
 }
 
 fn is_even(x: i32) -> bool {
@@ -283,4 +292,12 @@ impl Fix for User {}
 
 fn notify<T: Summary + Fix>(item: T) {
     println!("Notification: {}", item.summarize());
+}
+
+fn longest<'a>(str1: &'a str, str2: &'a str) -> &'a str { // rust says tell me how the liftime of output relates to the input, a generic lifetime annotation is required after which the return type of the ans will be the intersection of the lifetimes of str1 and str2
+    if str1.len() > str2.len() {
+        str1
+    } else {
+        str2
+    }
 }
