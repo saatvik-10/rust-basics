@@ -24,6 +24,10 @@ trait Fix {
     }
 }
 
+struct LifetimeUser<'a> {
+    name: &'a str
+}
+
 fn main() {
     let x: i32 = 5;
     let y: u32 = 5;
@@ -210,6 +214,11 @@ fn main() {
     }
     
     println!("Longest string: {}", ans);
+
+    let name = String::from("Alice");
+    let user = LifetimeUser{name: &name};
+
+    println!("User name: {}", user.name);
 }
 
 fn is_even(x: i32) -> bool {
