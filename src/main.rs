@@ -1,6 +1,6 @@
-use std::{fs, thread};
 use rand::{Rng, rng};
 use std::collections::HashMap;
+use std::{fs, thread};
 
 enum _Result<T, E> {
     Ok(T),
@@ -25,7 +25,7 @@ trait Fix {
 }
 
 struct LifetimeUser<'a> {
-    name: &'a str
+    name: &'a str,
 }
 
 fn main() {
@@ -40,12 +40,12 @@ fn main() {
     println!("greeting: {}", greeting);
 
     let char1 = greeting.chars().nth(0);
-    
+
     //not a cleaner way to handle Option
     println!("char: {}", char1.unwrap());
 
     //CONDITIONALS AND LOOPS
-    
+
     for i in 0..10 {
         println!("i: {}", i);
     }
@@ -88,7 +88,10 @@ fn main() {
         age: 30,
         active: true,
     };
-    println!("User: {}, Age: {}, Active: {}", user.name, user.age, user.active);
+    println!(
+        "User: {}, Age: {}, Active: {}",
+        user.name, user.age, user.active
+    );
 
     let res = fs::read_to_string("example.txt");
     match res {
@@ -99,7 +102,7 @@ fn main() {
     //if in a different function we return unwrap(), it will panic if the result is an Err and the program will crash
 
     let mut t_rng = rng();
-    let n:u32 = t_rng.random();
+    let n: u32 = t_rng.random();
     println!("Random Number is: {}", n);
 
     /* ADVANCE CONCEPTS */
@@ -111,7 +114,7 @@ fn main() {
     println!("{:?}", even_filter(&vec));
     println!("{:?}", vec);
 
-    let mut _vec2 = vec![1, 2, 3, 4, 5];// Create a vector with initial values
+    let mut _vec2 = vec![1, 2, 3, 4, 5]; // Create a vector with initial values
 
     let mut users = HashMap::new();
     users.insert(String::from("Alice"), 30);
@@ -127,7 +130,7 @@ fn main() {
     //use for(key, val) loop to iterate over HashMap
 
     let mut v1 = vec![1, 2, 3];
-    
+
     let v1_iter = v1.iter_mut();
 
     for val in v1_iter {
@@ -152,7 +155,7 @@ fn main() {
 
     let v2_iter = v2.iter();
     //consuming adapter
-    let sum:i32 = v2_iter.sum(); //won't be able to use v2_iter again
+    let sum: i32 = v2_iter.sum(); //won't be able to use v2_iter again
     println!("Sum of v2: {}", sum);
 
     let v2_iter = v2.iter();
@@ -191,7 +194,7 @@ fn main() {
 
     let word = String::from("hello world");
     let word_res = find_first_word(&word);
-    
+
     println!("First word: {}", word_res);
 
     let arr = [1, 2, 3, 4, 5];
@@ -212,11 +215,11 @@ fn main() {
     //     let str2 = String::from("world");
     //     ans = longest(&str1, &str2);
     // }
-    
+
     // println!("Longest string: {}", ans);
 
     let name = String::from("Alice");
-    let user = LifetimeUser{name: &name};
+    let user = LifetimeUser { name: &name };
 
     println!("User name: {}", user.name);
 
@@ -227,8 +230,8 @@ fn main() {
     });
 
     for i in 0..10000 {
-            println!("Main thread is: {}", i);
-        }
+        println!("Main thread is: {}", i);
+    }
 }
 
 fn is_even(x: i32) -> bool {
@@ -242,28 +245,52 @@ fn get_first_word(sentence: String) -> String {
         if char == ' ' {
             break;
         }
-    } 
+    }
     return ans;
 }
 
 fn update_str() {
     let mut s = String::from("hello");
-    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+    println!(
+        "Capacity: {}, Length: {}, pointer: {:p}",
+        s.capacity(),
+        s.len(),
+        s.as_ptr()
+    );
 
     s.push_str("world");
-    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+    println!(
+        "Capacity: {}, Length: {}, pointer: {:p}",
+        s.capacity(),
+        s.len(),
+        s.as_ptr()
+    );
 
     s.push_str("this");
-    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+    println!(
+        "Capacity: {}, Length: {}, pointer: {:p}",
+        s.capacity(),
+        s.len(),
+        s.as_ptr()
+    );
 
     s.push_str("is");
-    println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+    println!(
+        "Capacity: {}, Length: {}, pointer: {:p}",
+        s.capacity(),
+        s.len(),
+        s.as_ptr()
+    );
 
     for _ in 0..10 {
         s.push_str("rust");
-        println!("Capacity: {}, Length: {}, pointer: {:p}", s.capacity(), s.len(), s.as_ptr());
+        println!(
+            "Capacity: {}, Length: {}, pointer: {:p}",
+            s.capacity(),
+            s.len(),
+            s.as_ptr()
+        );
     }
-
 }
 
 fn takes_ownership(s: String) -> String {
@@ -275,11 +302,11 @@ fn borrow(s: &String) {
     println!("Taking ownership of: {}", s);
 }
 
-fn updated_str(s:&mut String) {
+fn updated_str(s: &mut String) {
     s.push_str("World");
 }
 
-fn even_filter(vec : &Vec<i32>) -> Vec<i32> {
+fn even_filter(vec: &Vec<i32>) -> Vec<i32> {
     let mut new_vec = Vec::new();
     for i in vec {
         if i % 2 == 0 {
@@ -301,9 +328,13 @@ fn find_first_word(word: &String) -> &str {
     return &word[0..index];
 }
 
-impl Summary for User { //traits are like interface in typescript
+impl Summary for User {
+    //traits are like interface in typescript
     fn summarize(&self) -> String {
-        return format!("User: {}, Age: {}, Active: {}", self.name, self.age, self.active);
+        return format!(
+            "User: {}, Age: {}, Active: {}",
+            self.name, self.age, self.active
+        );
     }
 }
 
@@ -313,10 +344,7 @@ fn notify<T: Summary + Fix>(item: T) {
     println!("Notification: {}", item.summarize());
 }
 
-fn longest<'a>(str1: &'a str, str2: &'a str) -> &'a str { // rust says tell me how the liftime of output relates to the input, a generic lifetime annotation is required after which the return type of the ans will be the intersection of the lifetimes of str1 and str2
-    if str1.len() > str2.len() {
-        str1
-    } else {
-        str2
-    }
+fn longest<'a>(str1: &'a str, str2: &'a str) -> &'a str {
+    // rust says tell me how the liftime of output relates to the input, a generic lifetime annotation is required after which the return type of the ans will be the intersection of the lifetimes of str1 and str2
+    if str1.len() > str2.len() { str1 } else { str2 }
 }
