@@ -232,6 +232,18 @@ fn main() {
     for i in 0..10000 {
         println!("Main thread is: {}", i);
     }
+
+    let handle = thread::spawn(|| {
+        for i in 0..10000 {
+            println!("Spawned thread is: {}", i);
+        }
+    });
+
+    handle.join().unwrap(); //wait for the spawned thread to finish like async await
+
+    for i in 0..10000 {
+        println!("Main thread is: {}", i);
+    }
 }
 
 fn is_even(x: i32) -> bool {
