@@ -207,16 +207,17 @@ fn main() {
         active: true,
     };
     notify(user);
-    // println!("User Summary: {}", user.summarize());
+    println!("User Summary: {}", user.summarize());
 
-    // let ans;
+    let ans;
 
-    // let str1 = String::from("hello"); {
-    //     let str2 = String::from("world");
-    //     ans = longest(&str1, &str2);
-    // }
+    let str1 = String::from("hello");
+    {
+        let str2 = String::from("world");
+        ans = longest(&str1, &str2);
+    }
 
-    // println!("Longest string: {}", ans);
+    println!("Longest string: {}", ans);
 
     let name = String::from("Alice");
     let user = LifetimeUser { name: &name };
@@ -244,6 +245,13 @@ fn main() {
     for i in 0..10000 {
         println!("Main thread is: {}", i);
     }
+
+    let v = vec![1, 2, 3, 4, 5];
+
+    thread::spawn(move || {
+        //move keyword to take ownership of v so that it can be used in the spawned thread bcz we could go out of scope b4 the thread starts
+        println!("Spawned thread is: {:?}", v);
+    });
 }
 
 fn is_even(x: i32) -> bool {
