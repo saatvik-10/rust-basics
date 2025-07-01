@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, thread};
 use rand::{Rng, rng};
 use std::collections::HashMap;
 
@@ -206,19 +206,29 @@ fn main() {
     notify(user);
     // println!("User Summary: {}", user.summarize());
 
-    let ans;
+    // let ans;
 
-    let str1 = String::from("hello"); {
-        let str2 = String::from("world");
-        ans = longest(&str1, &str2);
-    }
+    // let str1 = String::from("hello"); {
+    //     let str2 = String::from("world");
+    //     ans = longest(&str1, &str2);
+    // }
     
-    println!("Longest string: {}", ans);
+    // println!("Longest string: {}", ans);
 
     let name = String::from("Alice");
     let user = LifetimeUser{name: &name};
 
     println!("User name: {}", user.name);
+
+    thread::spawn(|| {
+        for i in 0..10000 {
+            println!("Spawned thread is: {}", i);
+        }
+    });
+
+    for i in 0..10000 {
+            println!("Main thread is: {}", i);
+        }
 }
 
 fn is_even(x: i32) -> bool {
