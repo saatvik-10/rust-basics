@@ -1,5 +1,6 @@
 use rand::{Rng, rng};
 use std::collections::HashMap;
+use std::sync::mpsc; //stands for multiple producer, single consumer, allows to send msg btw threads
 use std::{fs, thread};
 
 enum _Result<T, E> {
@@ -207,22 +208,22 @@ fn main() {
         active: true,
     };
     notify(user);
-    println!("User Summary: {}", user.summarize());
+    // println!("User Summary: {}", user.summarize());
 
-    let ans;
+    // let ans;
 
-    let str1 = String::from("hello");
-    {
-        let str2 = String::from("world");
-        ans = longest(&str1, &str2);
-    }
+    // let str1 = String::from("hello");
+    // {
+    //     let str2 = String::from("world");
+    //     ans = longest(&str1, &str2);
+    // }
 
-    println!("Longest string: {}", ans);
+    // println!("Longest string: {}", ans);
 
-    let name = String::from("Alice");
-    let user = LifetimeUser { name: &name };
+    // let name = String::from("Alice");
+    // let user = LifetimeUser { name: &name };
 
-    println!("User name: {}", user.name);
+    // println!("User name: {}", user.name);
 
     thread::spawn(|| {
         for i in 0..10000 {
@@ -252,6 +253,42 @@ fn main() {
         //move keyword to take ownership of v so that it can be used in the spawned thread bcz we could go out of scope b4 the thread starts
         println!("Spawned thread is: {:?}", v);
     });
+
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        let val = String::from("Hello from thread");
+        tx.send(val).unwrap(); //send the value to the main thread
+    });
+
+    //try not to use unwrap in production code, use pattern matching instead to handle errors gracefully
+
+    let received = rx.recv().unwrap(); //receive the value from the thread
+    println!("Received: {}", received);
+
+    let (tx, rx) = mpsc::channel();
+
+    for i in 0..10 {
+        let producer = tx.clone(); //clone the sender to send multiple messages
+        thread::spawn(move || {
+            let mut ans: u64 = 0;
+            for j in 0..10000000 {
+                ans = ans + (i * 10000000 + j);
+            }
+            producer.send(ans).unwrap();
+        });
+    }
+
+    drop(tx); //close the channel to indicate no more messages will be sent
+
+    let mut ans = 0;
+
+    for val in rx {
+        ans = ans + val;
+        println!("Received Values");
+    }
+
+    println!("Received: {}", ans);
 }
 
 fn is_even(x: i32) -> bool {
