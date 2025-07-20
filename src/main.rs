@@ -7,6 +7,11 @@ enum _Result<T, E> {
     Ok(T),
     Err(E),
 }
+
+struct Rect {
+    width: u32,
+    height: u32,
+}
 struct User {
     name: String,
     age: u32,
@@ -17,6 +22,11 @@ trait Summary {
     fn summarize(&self) -> String {
         return String::from("No summary available"); //default implementation in case required
     }
+}
+
+trait Shape {
+    fn area(&self) -> u32;
+    fn perimeter(&self) -> u32;
 }
 
 trait Fix {
@@ -289,6 +299,18 @@ fn main() {
     }
 
     println!("Received: {}", ans);
+
+    let r = Rect {
+        width: 10,
+        height: 20,
+    };
+
+    println!("{}", r.area());
+    println!("Shape: {}", Rect::shape());
+
+    let (area, perimeter) = get_a_p(r);
+
+    println!("area: {}, perimeter: {}", area, perimeter);
 }
 
 fn is_even(x: i32) -> bool {
@@ -404,4 +426,29 @@ fn notify<T: Summary + Fix>(item: T) {
 fn longest<'a>(str1: &'a str, str2: &'a str) -> &'a str {
     // rust says tell me how the liftime of output relates to the input, a generic lifetime annotation is required after which the return type of the ans will be the intersection of the lifetimes of str1 and str2
     if str1.len() > str2.len() { str1 } else { str2 }
+}
+
+impl Rect {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn shape() -> String {
+        //static method, will directly get called on class/struct
+        String::from("Rectangle")
+    }
+}
+
+impl Shape for Rect {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn perimeter(&self) -> u32 {
+        (self.width + self.height) * 2
+    }
+}
+
+fn get_a_p(r: impl Shape) -> (u32, u32) {
+    return (r.area(), r.perimeter());
 }
