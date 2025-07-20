@@ -2,7 +2,6 @@ use rand::{Rng, rng};
 use std::collections::HashMap;
 use std::sync::mpsc; //stands for multiple producer, single consumer, allows to send msg btw threads
 use std::{fs, thread};
-
 enum _Result<T, E> {
     Ok(T),
     Err(E),
@@ -12,6 +11,8 @@ struct Rect {
     width: u32,
     height: u32,
 }
+#[derive(Debug)]
+
 struct User {
     name: String,
     age: u32,
@@ -217,6 +218,9 @@ fn main() {
         age: 30,
         active: true,
     };
+
+    println!("{:?}", user); //used when u hv a trait and you want to give it a default implementation
+
     notify(user);
     // println!("User Summary: {}", user.summarize());
 
