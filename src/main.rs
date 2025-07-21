@@ -1,5 +1,6 @@
 use rand::{Rng, rng};
 use std::collections::HashMap;
+use std::fmt::Error;
 use std::sync::mpsc; //stands for multiple producer, single consumer, allows to send msg btw threads
 use std::{fs, thread};
 enum _Result<T, E> {
@@ -28,6 +29,44 @@ trait Summary {
 trait Shape {
     fn area(&self) -> u32;
     fn perimeter(&self) -> u32;
+}
+
+trait Serialize {
+    fn serialize(&self) -> Vec<u8>;
+}
+
+trait Deserialize {
+    fn deserialize(v: &[u8]) -> Result<Swap, Error>;
+}
+
+#[derive(Debug)]
+struct Swap {
+    qty_1: u32,
+    qty_2: u32,
+}
+
+impl Serialize for Swap {
+    fn serialize(&self) -> Vec<u8> {
+        let mut v = Vec::new();
+
+        v.extend_from_slice(&self.qty_1.to_be_bytes());
+        v.extend_from_slice(&self.qty_2.to_be_bytes());
+
+        return v;
+    }
+}
+
+impl Deserialize for Swap {
+    fn deserialize(v: &[u8]) -> Result<Swap, Error> {
+        if v.len() < 8 {
+            return Err(Error);
+        }
+
+        let qty_1 = u32::from_be_bytes([v[0], v[1], v[2], v[3]]);
+        let qty_2 = u32::from_be_bytes([v[4], v[5], v[6], v[7]]);
+
+        return Ok(Swap { qty_1, qty_2 });
+    }
 }
 
 trait Fix {
@@ -315,6 +354,14 @@ fn main() {
     let (area, perimeter) = get_a_p(r);
 
     println!("area: {}, perimeter: {}", area, perimeter);
+
+    let swap = Swap { qty_1: 1, qty_2: 2 };
+
+    let ans1 = swap.serialize();
+    let ans2 = Swap::deserialize(&ans1);
+
+    println!("{:?}", ans1);
+    println!("{:?}", ans2);
 }
 
 fn is_even(x: i32) -> bool {
