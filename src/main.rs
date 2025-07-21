@@ -11,7 +11,7 @@ struct Rect {
     width: u32,
     height: u32,
 }
-#[derive(Debug)]
+#[derive(Debug)] //custom derived procedural macro
 
 struct User {
     name: String,
@@ -59,7 +59,7 @@ fn main() {
     //CONDITIONALS AND LOOPS
 
     for i in 0..10 {
-        println!("i: {}", i);
+        println!("i: {}", i); //declarative macro
     }
 
     let is_even = is_even(x);
@@ -456,3 +456,9 @@ impl Shape for Rect {
 fn get_a_p(r: impl Shape) -> (u32, u32) {
     return (r.area(), r.perimeter());
 }
+
+//#post[("/user/")] //attribute like procedural macro
+
+// fn create_user() {
+//     sqlx:query!("INSERT INTO USER VALUES()"); //function like procedural macro
+// }
