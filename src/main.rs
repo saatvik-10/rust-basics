@@ -509,3 +509,5 @@ fn get_a_p(r: impl Shape) -> (u32, u32) {
 // fn create_user() {
 //     sqlx:query!("INSERT INTO USER VALUES()"); //function like procedural macro
 // }
+
+// dervied macros are only applied to emums or structs and not to a function
